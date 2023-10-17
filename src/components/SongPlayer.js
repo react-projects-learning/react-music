@@ -11,7 +11,7 @@ const SongPlayer = () => {
     <div className="player-container">
       <div className="time-control">
         <p>Start Time</p>
-        <input type="range" />
+        <input type="range" value={10} />
         <p>End Time</p>
       </div>
 
