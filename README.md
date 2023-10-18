@@ -23,7 +23,16 @@ Styles Folder structure we can use:-
 
 ### Time control:-
 
-- How to get duration of a song?
-- How to change start and end time?
+- How to get duration of a song? -> audioRef?.current?.duration
+
+- How to change start and end time? -> audioRef?.current?.currentTime
+
 - How to run that progress bar to show song progress? (timePassed / totalDuration)
+
+- How to update timings on screen? -> do we need to use setInterval for every 100 seconds and clear it if song is paused
+
+- what happens when a new song is selected? Do we need to play it or not?
+
+- if we are using interval we need to clear it if song changes
+
 - How to bind the audio to the progress bar input? (so seeking progressBar should take song at that time)
