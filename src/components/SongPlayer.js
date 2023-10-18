@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaPlay, FaAngleLeft, FaAngleRight, FaPause } from "react-icons/fa";
 import { getAsHrMinFormat } from "../utils";
 
@@ -12,13 +12,10 @@ const SongPlayer = ({ activeSong, nextSongHandler, previousSongHandler }) => {
 
   const audioRef = useRef(null);
 
-  const initiaTimingUpdatehandler = () => {
-    let duration = getAsHrMinFormat(audioRef?.current?.duration || 0);
-    let currentTime = getAsHrMinFormat(audioRef?.current?.currentTime || 0);
-    setSongTimings({
-      duration,
-      currentTime,
-    });
+  const timeUpdateHandler = (e) => {
+    const currentTime = getAsHrMinFormat(e.target.currentTime);
+    const duration = getAsHrMinFormat(e.target.duration);
+    setSongTimings({ currentTime, duration });
   };
 
   const playSongHandler = () => {
@@ -56,7 +53,8 @@ const SongPlayer = ({ activeSong, nextSongHandler, previousSongHandler }) => {
       <audio
         src={activeSong.audio}
         ref={audioRef}
-        onLoadedMetadata={initiaTimingUpdatehandler}
+        onTimeUpdate={timeUpdateHandler}
+        onLoadedMetadata={timeUpdateHandler}
       />
     </div>
   );

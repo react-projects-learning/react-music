@@ -30,6 +30,7 @@ Styles Folder structure we can use:-
 - How to run that progress bar to show song progress? (timePassed / totalDuration)
 
 - How to update timings on screen? -> do we need to use setInterval for every 100 seconds and clear it if song is paused
+  let's use inbuilt audio methods instaed of interval
 
 - what happens when a new song is selected? Do we need to play it or not?
 
