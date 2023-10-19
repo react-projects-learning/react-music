@@ -4,7 +4,7 @@ import SongCard from "./SongCard";
 const SideBar = ({ allSongs, changeSongHandler }) => {
   return (
     <>
-      <div className="cover"></div>
+      {/* <div className="cover"></div> */}
       <div className="sidebar">
         <h2>Library</h2>
         {allSongs.map((song) => (

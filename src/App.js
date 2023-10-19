@@ -17,18 +17,9 @@ const App = () => {
     } else {
       nextActiveSongIndex = activeSongIndex + 1;
     }
-    setAllSongs((x) => {
-      return x.map((s, i) => {
-        if (s.id === activeSong.id) {
-          s.active = false;
-        }
-        if (i === nextActiveSongIndex) {
-          s.active = true;
-        }
-        return s;
-      });
-    });
-    console.log(allSongs[nextActiveSongIndex]);
+    setAllSongs((x) =>
+      x.map((s, i) => ({ ...s, active: i === nextActiveSongIndex }))
+    );
     setActiveSong({
       ...allSongs[nextActiveSongIndex],
       active: true,
@@ -43,36 +34,19 @@ const App = () => {
     } else {
       prevActiveSongIndex = activeSongIndex - 1;
     }
-    setAllSongs((x) => {
-      return x.map((s, i) => {
-        if (s.id === activeSong.id) {
-          s.active = false;
-        }
-        if (i === prevActiveSongIndex) {
-          s.active = true;
-        }
-        return s;
-      });
-    });
-    console.log(allSongs[prevActiveSongIndex]);
+    setAllSongs((x) =>
+      x.map((s, i) => ({ ...s, active: i === prevActiveSongIndex }))
+    );
     setActiveSong({
       ...allSongs[prevActiveSongIndex],
       active: true,
     });
   };
 
-  const changeSongHandler = (id) => {
-    const newActiveSong = allSongs.find((s) => s.id === id);
-    setActiveSong(newActiveSong);
+  const changeSongHandler = (newActiveSong) => {
+    setActiveSong({ ...newActiveSong, active: true });
     setAllSongs((x) =>
-      x.map((s) => {
-        if (s.id === id) {
-          s.active = true;
-        } else {
-          s.active = false;
-        }
-        return s;
-      })
+      x.map((s) => ({ ...s, active: s.id === newActiveSong.id }))
     );
   };
 

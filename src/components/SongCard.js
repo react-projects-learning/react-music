@@ -1,14 +1,14 @@
 import React from "react";
 
 const SongCard = ({ song, changeSongHandler }) => {
-  const songChangeHandler = (id) => {
-    changeSongHandler(id);
+  const songChangeHandler = () => {
+    changeSongHandler(song);
   };
 
   return (
     <div
       className={`card ${song.active ? "active" : ""}`}
-      onClick={() => songChangeHandler(song.id)}
+      onClick={songChangeHandler}
     >
       <img src={song.cover} className="song-cover" alt={song.name} />
       <div className="song-info">
