@@ -14,6 +14,7 @@ Styles Folder structure we can use:-
 - allSongs (have an active flag to indicate the current playing song)
 - currentSong
 - isPlaying (its true show pause button else show play button)
+- songTimingInfo (include currentTime, duration)
 
 ### Player control:-
 
@@ -28,12 +29,13 @@ Styles Folder structure we can use:-
 - How to change start and end time? -> audioRef?.current?.currentTime
 
 - How to run that progress bar to show song progress? (timePassed / totalDuration)
+  not required. think of it as an input with range and max value to be song duartion and currentTime to be the value
 
 - How to update timings on screen? -> do we need to use setInterval for every 100 seconds and clear it if song is paused
   let's use inbuilt audio methods instaed of interval
 
 - what happens when a new song is selected? Do we need to play it or not?
 
-- if we are using interval we need to clear it if song changes
+- if we are using interval we need to clear it if song changes -> we are not using interval
 
-- How to bind the audio to the progress bar input? (so seeking progressBar should take song at that time)
+- How to bind the audio to the progress bar input? (so seeking progressBar should take song at that time) -> take input as range one with min=0, max=duration and value=curretTime and onChnage is called whenever we drag the range input

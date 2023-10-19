@@ -13,8 +13,8 @@ const SongPlayer = ({ activeSong, nextSongHandler, previousSongHandler }) => {
   const audioRef = useRef(null);
 
   const timeUpdateHandler = (e) => {
-    const currentTime = getAsHrMinFormat(e.target.currentTime);
-    const duration = getAsHrMinFormat(e.target.duration);
+    const currentTime = e.target.currentTime;
+    const duration = e.target.duration;
     setSongTimings({ currentTime, duration });
   };
 
@@ -35,12 +35,24 @@ const SongPlayer = ({ activeSong, nextSongHandler, previousSongHandler }) => {
     }
   };
 
+  const audioSeekedHandler = (e) => {
+    console.log("I am seeking");
+    setSongTimings((x) => ({ ...x, currentTime: e.target.value }));
+    audioRef.current.currentTime = e.target.value;
+  };
+
   return (
     <div className="player-container">
       <div className="time-control">
-        <p>{songTimings.currentTime || "-"}</p>
-        <input type="range" value={0} onChange={() => {}} />
-        <p>{songTimings.duration || "-"}</p>
+        <p>{getAsHrMinFormat(songTimings.currentTime) || "-"}</p>
+        <input
+          type="range"
+          min={0}
+          max={songTimings.duration}
+          value={songTimings.currentTime}
+          onChange={audioSeekedHandler}
+        />
+        <p>{getAsHrMinFormat(songTimings.duration) || "-"}</p>
       </div>
 
       <div className="player-control">

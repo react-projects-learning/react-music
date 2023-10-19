@@ -3,6 +3,7 @@ import Song from "./components/Song";
 import SongPlayer from "./components/SongPlayer";
 import { useState } from "react";
 import songs from "./data";
+import SideBar from "./components/SideBar";
 
 const App = () => {
   const [allSongs, setAllSongs] = useState(songs);
@@ -60,6 +61,21 @@ const App = () => {
     });
   };
 
+  const changeSongHandler = (id) => {
+    const newActiveSong = allSongs.find((s) => s.id === id);
+    setActiveSong(newActiveSong);
+    setAllSongs((x) =>
+      x.map((s) => {
+        if (s.id === id) {
+          s.active = true;
+        } else {
+          s.active = false;
+        }
+        return s;
+      })
+    );
+  };
+
   return (
     <div className="App">
       <Song activeSong={activeSong} />
@@ -68,6 +84,7 @@ const App = () => {
         nextSongHandler={nextSongHandler}
         previousSongHandler={previousSongHandler}
       />
+      <SideBar allSongs={allSongs} changeSongHandler={changeSongHandler} />
     </div>
   );
 };
