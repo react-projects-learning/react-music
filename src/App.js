@@ -13,11 +13,14 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${isSideBarOpen ? "App__shift-right" : ""}`}>
       <NavBar toggleSideBarHandler={toggleSideBarHandler} />
       <Song />
       <SongPlayer />
-      <SideBar isSideBarOpen={isSideBarOpen} />
+      <SideBar
+        isSideBarOpen={isSideBarOpen}
+        setIsSideBarOpen={setIsSideBarOpen}
+      />
     </div>
   );
 };

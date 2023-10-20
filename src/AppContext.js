@@ -1,5 +1,6 @@
 import { createContext, useState, useRef } from "react";
 import songs from "./data";
+import { playAudio } from "./utils";
 
 export const AppContext = createContext({
   allSongs: [],
@@ -14,8 +15,7 @@ export const AppContext = createContext({
   },
   activeSongInfo: { duration: 0, currentTime: 0, isSongPlaying: false },
   playSongHandler: () => {},
-  nextSongHandler: () => {},
-  previousSongHandler: () => {},
+  nextPrevSongHandler: () => {},
   changeSongHandler: () => {},
   audioSeekedHandler: () => {},
 });
@@ -42,38 +42,25 @@ const AppContextProvider = (props) => {
     setActiveSongInfo((x) => ({ ...x, isSongPlaying: !x.isSongPlaying }));
   };
 
-  const nextSongHandler = () => {
-    let nextActiveSongIndex;
+  const nextPrevSongHandler = (side) => {
+    let newActiveSongIndex;
     const activeSongIndex = allSongs.findIndex((s) => s.id === activeSong.id);
-    if (activeSongIndex === allSongs.length - 1) {
-      nextActiveSongIndex = 0;
+    if (side === "next") {
+      newActiveSongIndex = (activeSongIndex + 1) % allSongs.length;
     } else {
-      nextActiveSongIndex = activeSongIndex + 1;
+      newActiveSongIndex = activeSongIndex - 1;
+      if (newActiveSongIndex < 0) {
+        newActiveSongIndex = allSongs.length - 1;
+      }
     }
     setAllSongs((x) =>
-      x.map((s, i) => ({ ...s, active: i === nextActiveSongIndex }))
+      x.map((s, i) => ({ ...s, active: i === newActiveSongIndex }))
     );
     setActiveSong({
-      ...allSongs[nextActiveSongIndex],
+      ...allSongs[newActiveSongIndex],
       active: true,
     });
-  };
-
-  const previousSongHandler = () => {
-    let prevActiveSongIndex;
-    const activeSongIndex = allSongs.findIndex((s) => s.id === activeSong.id);
-    if (activeSongIndex === 0) {
-      prevActiveSongIndex = allSongs.length - 1;
-    } else {
-      prevActiveSongIndex = activeSongIndex - 1;
-    }
-    setAllSongs((x) =>
-      x.map((s, i) => ({ ...s, active: i === prevActiveSongIndex }))
-    );
-    setActiveSong({
-      ...allSongs[prevActiveSongIndex],
-      active: true,
-    });
+    playAudio(activeSongInfo.isSongPlaying, audioRef);
   };
 
   const changeSongHandler = (newActiveSong) => {
@@ -81,16 +68,7 @@ const AppContextProvider = (props) => {
     setAllSongs((x) =>
       x.map((s) => ({ ...s, active: s.id === newActiveSong.id }))
     );
-    if (activeSongInfo.isSongPlaying) {
-      // audioRef.current.play() return a promise
-      // which is resolved when audio is ready to play
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.then((_) => {
-          audioRef.current.play();
-        });
-      }
-    }
+    playAudio(activeSongInfo.isSongPlaying, audioRef);
   };
 
   const timeUpdateHandler = (e) => {
@@ -105,13 +83,17 @@ const AppContextProvider = (props) => {
     audioRef.current.currentTime = e.target.value;
   };
 
+  const songEndedHandler = (e) => {
+    console.log("Song is ended");
+    nextPrevSongHandler("next");
+  };
+
   return (
     <AppContext.Provider
       value={{
         allSongs,
         activeSong,
-        previousSongHandler,
-        nextSongHandler,
+        nextPrevSongHandler,
         changeSongHandler,
         activeSongInfo,
         playSongHandler,
@@ -125,6 +107,7 @@ const AppContextProvider = (props) => {
           ref={audioRef}
           onTimeUpdate={timeUpdateHandler}
           onLoadedMetadata={timeUpdateHandler}
+          onEnded={songEndedHandler}
         />
       </>
     </AppContext.Provider>

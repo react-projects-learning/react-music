@@ -21,3 +21,29 @@
     opacity: 0.6;
   }
 }
+
+@media (max-width: 1023px) {
+  .song-container {
+    justify-content: flex-start;
+    margin-top: 1rem;
+    min-height: 45vh;
+
+    h2 {
+      margin-top: 2rem;
+    }
+
+    img {
+      width: 45%;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .song-container {
+    min-height: 30vh;
+
+    img {
+      width: 60%;
+    }
+  }
+}

@@ -6,8 +6,7 @@ import { AppContext } from "../AppContext";
 const SongPlayer = () => {
   const {
     activeSongInfo,
-    nextSongHandler,
-    previousSongHandler,
+    nextPrevSongHandler,
     playSongHandler,
     audioSeekedHandler,
   } = useContext(AppContext);
@@ -27,10 +26,10 @@ const SongPlayer = () => {
       </div>
 
       <div className="player-control">
-        <FaAngleLeft onClick={previousSongHandler} />
+        <FaAngleLeft onClick={() => nextPrevSongHandler("prev")} />
         {!activeSongInfo.isSongPlaying && <FaPlay onClick={playSongHandler} />}
         {activeSongInfo.isSongPlaying && <FaPause onClick={playSongHandler} />}
-        <FaAngleRight onClick={nextSongHandler} />
+        <FaAngleRight onClick={() => nextPrevSongHandler("next")} />
       </div>
     </div>
   );
