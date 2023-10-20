@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../AppContext";
 
-const SongCard = ({ song, changeSongHandler }) => {
+const SongCard = ({ song }) => {
+  const { changeSongHandler } = useContext(AppContext);
+
   const songChangeHandler = () => {
     changeSongHandler(song);
   };
