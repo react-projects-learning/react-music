@@ -15,15 +15,15 @@ const SongPlayer = () => {
   return (
     <div className="player-container">
       <div className="time-control">
-        <p>{getAsHrMinFormat(activeSongInfo.currentTime)}</p>
+        <p>{getAsHrMinFormat(activeSongInfo.currentTime || 0)}</p>
         <input
           type="range"
           min={0}
-          max={activeSongInfo.duration}
-          value={activeSongInfo.currentTime}
+          max={activeSongInfo.duration || 0}
+          value={activeSongInfo.currentTime || 0}
           onChange={audioSeekedHandler}
         />
-        <p>{getAsHrMinFormat(activeSongInfo.duration)}</p>
+        <p>{getAsHrMinFormat(activeSongInfo.duration || 0)}</p>
       </div>
 
       <div className="player-control">

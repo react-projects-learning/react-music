@@ -9,12 +9,18 @@
   box-shadow: 2px 2px 50px #cdcccc;
   overflow: scroll;
 
+  // transition and transform
+  transform: translateX(-100%);
+  transition: all 0.5s ease;
+  opacity: 0;
+
   h2 {
     margin: 1rem 2rem;
   }
 
-  @media (max-width: 450px) {
-    width: 100vw;
+  &--open {
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
 

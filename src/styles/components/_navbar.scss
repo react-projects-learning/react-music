@@ -1,0 +1,23 @@
+.nav {
+  min-height: 10vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    padding: 0.5rem;
+    border: none;
+    border: 1px solid #414141;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    &:hover {
+      background-color: #414141;
+      color: white;
+    }
+  }
+}
